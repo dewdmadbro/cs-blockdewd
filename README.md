@@ -16,13 +16,14 @@
 
 ### **Requirments and installation**
  Requires yq & grepcidr which both will be installed if needed during installation\
- Systemd for scheduling and automation
+ Systemd for scheduling and automation\
+ Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)
 
  To install download via command line
 
         curl -L -o cs-blockdewd.tar.gz https://github.com/dewdmadbro/cs-blockdewd/archive/refs/tags/Latest.tar.gz
 
- Then extract the files, then check the config.yaml and edit as needed
+ Then extract the files, then check the config.yaml and edit as needed per comments within
 
         tar -xvzf cs-blockdewd.tar.gz
 
