@@ -12,10 +12,10 @@
  Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
  Finally checks IP's against existing IP decisions to reduce redundant decisions\
  Imports into crowdsec while only creating 1 alert as to not flood logs\
- Can run crowdsec import for native install or docker container\
+ Can run crowdsec import for native install or docker container
 
 ### **Requirments and installation**
- Requires yq & grepcidr which both will be installed if need during installation\
+ Requires yq & grepcidr which both will be installed if needed during installation\
  Systemd for scheduling and automation
 
  To install download via command line
@@ -26,7 +26,7 @@
 
         tar -xvzf cs-blockdewd.tar.gz
 
- Once done make install-csblockdew.sh executable and then run it
+ Once done make install-csblockdewd.sh executable and then run it
 
         chmod +x install-csblockdewd.sh
         sudo ./install-csblockdewd.sh
@@ -51,4 +51,3 @@
  
  Currently I do not have a dedicated install mechanism\
  Best way to do it now is to run the uninstaller and then download latest and reinstall
- 
