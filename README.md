@@ -1,25 +1,25 @@
 # **CS-BlockDewd**
 
-Easy and automated blocklist pulling and importing for crowdsec aimed at reducing redundant decisions and minimal impact on hardware. Designed to run as a systemd service for a set and forget approach onceonce configured.
+Easy and automated blocklist pulling and importing for crowdsec aimed at reducing redundant decisions and minimal impact on hardware. Designed to run as a systemd service for a set and forget approach once configured.
 
 
 ## **Main Features**
 
-Easy configuration via a simple yaml file
-Automated blocklist pulling and import every 6 hours
-Filters out duplicate entries from pulled lists
-Checks IP's against the Cidr ranges from pulled lists to reduce redundant decisions
-Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions
-Finally checks IP's against existing IP decisions to reduce redundant decisions
-Imports into crowdsec while only creating 1 alert as to not flood logs
-Can run crowdsec import for native install or docker container
+Easy configuration via a simple yaml file\
+Automated blocklist pulling and import every 6 hours\
+Filters out duplicate entries from pulled lists\
+Checks IP's against the Cidr ranges from pulled lists to reduce redundant decisions\
+Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
+Finally checks IP's against existing IP decisions to reduce redundant decisions\
+Imports into crowdsec while only creating 1 alert as to not flood logs\
+Can run crowdsec import for native install or docker container\
 
 ### **Requirments and installation**
 Requires yq & grepcidr which both will be installed if need during installation
 
 To install download via command line
 
-        curl -L -o cs-blockdewd.tar.gz https://github.com/dewdmadbro/cs-blockdewd/archive/refs/heads/main.tar.gz
+        curl -L -o cs-blockdewd.tar.gz https://github.com/dewdmadbro/cs-blockdewd/archive/refs/tags/Latest.tar.gz
 
 Then extract the files, then check the config.yaml and edit as needed
 
@@ -28,8 +28,8 @@ Then extract the files, then check the config.yaml and edit as needed
 Once done make install-csblockdew.sh executable and then run it
 
         chmod +x install-csblockdewd.sh
-        ./install-csblockdewd.sh
+        sudo ./install-csblockdewd.sh
 
- During installation it will check for yq & grepcidr and install if needed
- Also the systemd service and timer will be generated
+ During installation it will check for yq & grepcidr and install if needed\
+ Also the systemd service and timer will be generated\
  The final thing it will do is run the service for the first time       
