@@ -1,9 +1,9 @@
-#** CS-BlockDewd **
+# **CS-BlockDewd**
 
 Easy and automated blocklist pulling and importing for crowdsec aimed at reducing redundant decisions and minimal impact on hardware. Designed to run as a systemd service for a set and forget approach onceonce configured.
 
 
-##** Main Features **
+## **Main Features**
 
 Easy configuration via a simple yaml file
 Automated blocklist pulling and import every 6 hours
@@ -14,7 +14,7 @@ Finally checks IP's against existing IP decisions to reduce redundant decisions
 Imports into crowdsec while only creating 1 alert as to not flood logs
 Can run crowdsec import for native install or docker container
 
-###** Requirments and installation
+### **Requirments and installation**
 Requires yq & grepcidr which both will be installed if need during installation
 
 To install download via command line
