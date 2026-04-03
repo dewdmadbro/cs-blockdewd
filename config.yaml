@@ -1,12 +1,11 @@
 # config.yml
 
 #systemd run interval
-systemd_timer: '24h'
+systemd_timer: '6h'
 #if running in docker then we need the container name
-cs_container: 'crowdsec'
-#run cscli bouncers add <MyBouncerName> 
+cs_container: 'crowdsec' 
 #put that key here
-bouncerkey: 'i436AS5/T9UtFVIVcfFHARrNDxWN4IrpL1nbDzXSE9s'
+bouncerkey: 'crowdsec bouncer key'
 #decision duration recommended 72h
 ban_duration: '72h'
 #Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
