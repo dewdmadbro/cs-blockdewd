@@ -1,0 +1,32 @@
+# config.yml
+
+#systemd run interval
+systemd_timer: '24h'
+#if running in docker then we need the container name
+cs_container: 'crowdsec'
+#run cscli bouncers add <MyBouncerName> 
+#put that key here
+bouncerkey: 'i436AS5/T9UtFVIVcfFHARrNDxWN4IrpL1nbDzXSE9s'
+#decision duration recommended 72h
+ban_duration: '72h'
+#Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
+abipdb_filter: '# '
+#Lists need no filtering or only '#' needs filtered
+#Can add more
+urls_standard:
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level1.netset
+  -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-drop.ipv4
+  -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-asndrop.ipv4
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/et_block.netset
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/criminalip.txt
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/censys.txt
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/openportstats.txt
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shodan.txt
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shadowserver.txt
+  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/normshield.txt
+#Requires abipdb_filter
+#Can add more from this repo if wanted
+#Can also be left blank and it will be skipped
+urls_abuseipdb:
+  -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/stats/hallofshame/subnets/abuseipdb-s99-hallofshame-all-75percent.ipv4
+  -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/abuseipdb-s100-3d.ipv4
