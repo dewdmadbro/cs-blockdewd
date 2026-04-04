@@ -29,11 +29,13 @@
  Then extract the files, then check the config.yaml and edit as needed per comments within
 
         tar -xvzf cs-blockdewd.tar.gz
+        rm cs-blockdewd.tar.gz
 
  Once done make install-csblockdewd.sh executable and then run it
 
+        cd cs-blockdewd-Latest
         chmod +x blockdewd.sh
-        sudo ./blockdewd.sh install
+        sudo blockdewd.sh install
 
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
@@ -44,7 +46,8 @@
 
  **To uninstall**
  
-        sudo ./blockdewd.sh remove
+        cd cs-blockdewd-Latest
+        sudo blockdewd.sh remove
 
  This will disble the cs-blockdewd.service and cs-blockdewd.timer\
  Then it will remove the files and reload the systemd daemon\
