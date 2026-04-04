@@ -69,7 +69,7 @@ COUNTCIDR=$(wc -l < "$CIDRLIST")
 
 #check IPLIST against whitelist by geoip
 if [ -n "$GEOIP" ]; then
-    geoip-shell lookup -F "$IPLIST" > "$GSIPLIST"
+    geoip-shell lookup -F "$IPLIST" | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$GSIPLIST"
     echo "-----> Checking IPs Against GEOIP-SHELL"
 else
     cat "$IPLIST" > "$GSIPLIST"
