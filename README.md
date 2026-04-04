@@ -17,7 +17,7 @@
 
 ### **Requirments and installation**
 
- Not required but highly recommended to have geoip-shell for geoblocking and in whitelist mode so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)
+ Not required but highly recommended to have geoip-shell for geoblocking and in whitelist mode so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
  Requires yq & grepcidr which both will be installed if needed during installation\
  Systemd for scheduling and automation\
  Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)
