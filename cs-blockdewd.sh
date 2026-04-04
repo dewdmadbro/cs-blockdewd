@@ -78,6 +78,7 @@ COUNTIP=$(wc -l < "$INPUT2")
 sleep 1
 
 #set new ips and cidr for import & count
+echo "-----> Removing IPs Already In Crowdsec"
 grep -xvFf "$IPDECS" "$INPUT2" > "$IMPORT"
 grep -xvFf "$CIDRDECS" "$CIDRLIST" >> "$IMPORT"
 COUNTCIDRDECS=$(wc -l < "$CIDRDECS")
