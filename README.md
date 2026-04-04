@@ -33,7 +33,7 @@
 
  Once done with config you will need to make blockdewd.sh executable and then run install
 
-        cd cs-blockdewd-Latest
+        cd cs-blockdewd-0.62
         chmod +x blockdewd.sh
         sudo ./blockdewd.sh install
 
