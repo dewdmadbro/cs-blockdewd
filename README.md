@@ -8,12 +8,12 @@
  Easy configuration via a simple yaml file\
  Automated blocklist pulling and import every 6 hours\
  Filters out duplicate entries from pulled lists\
- Checks IP's against geopip-shell if installed to only have to created decisions for items it doesn't already block (only if installed)
+ Checks IP's against geopip-shell if installed so we only have to created decisions for items it doesn't already block (only if installed)\
  Checks IP's against the Cidr ranges from pulled lists to reduce redundant decisions\
  Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
  Finally checks IP's against existing IP decisions to reduce redundant decisions\
  Imports into crowdsec while only creating 1 alert as to not flood logs\
- Can run crowdsec import for native install or docker container
+ Can run crowdsec import for native install or docker container\
 
 ### **Requirments and installation**
 
@@ -31,7 +31,7 @@
         tar -xvzf cs-blockdewd.tar.gz
         rm cs-blockdewd.tar.gz
 
- Once done make install-csblockdewd.sh executable and then run it
+ Once done with config you will need to make blockdewd.sh executable and then run install
 
         cd cs-blockdewd-Latest
         chmod +x blockdewd.sh
@@ -40,7 +40,7 @@
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
  It will map the service to run cs-blockdewd.sh and generate a log in the extracted folder
- The final thing it will do is run the service for the first time       
+ The final thing it will do is run the service for the first time\  
 
 ### **Removal and updating**
 
@@ -56,4 +56,4 @@
  **To update**
  
  Currently I do not have a dedicated update mechanism\
- Best way to do it now is to uninstall and then download latest and follow instalation instructions
+ Best way to do it now is to uninstall and then download latest and follow installation instructions
