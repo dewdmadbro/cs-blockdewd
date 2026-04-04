@@ -32,8 +32,8 @@
 
  Once done make install-csblockdewd.sh executable and then run it
 
-        chmod +x install-csblockdewd.sh
-        sudo ./install-csblockdewd.sh
+        chmod +x blockdewd.sh
+        sudo ./blockdewd.sh install
 
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
@@ -44,8 +44,7 @@
 
  **To uninstall**
  
-        chmod +x uninstall-csblockdewd.sh
-        sudo ./uninstall-csblockdewd.sh
+        sudo ./blockdewd.sh remove
 
  This will disble the cs-blockdewd.service and cs-blockdewd.timer\
  Then it will remove the files and reload the systemd daemon\
@@ -54,4 +53,4 @@
  **To update**
  
  Currently I do not have a dedicated update mechanism\
- Best way to do it now is to run the uninstaller and then download latest and reinstall
+ Best way to do it now is to uninstall and then download latest and follow instalation instructions
