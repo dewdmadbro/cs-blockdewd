@@ -34,7 +34,7 @@
 
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
- It will map the service to run cs-blockdewd.sh and gernerate a log in the extracted folder
+ It will map the service to run cs-blockdewd.sh and generate a log in the extracted folder
  The final thing it will do is run the service for the first time       
 
 ### **Removal and updating**
@@ -50,5 +50,5 @@
 
  **To update**
  
- Currently I do not have a dedicated install mechanism\
+ Currently I do not have a dedicated update mechanism\
  Best way to do it now is to run the uninstaller and then download latest and reinstall
