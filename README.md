@@ -24,7 +24,7 @@
 
  To install download via command line
 
-        curl -L -o cs-blockdewd.tar.gz https://github.com/dewdmadbro/cs-blockdewd/archive/refs/tags/Latest.tar.gz
+        curl -L -o cs-blockdewd.tar.gz  https://github.com/dewdmadbro/cs-blockdewd/archive/refs/tags/V0.62.tar.gz
 
  Then extract the files, then check the config.yaml and edit as needed per comments within
 
