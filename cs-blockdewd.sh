@@ -103,7 +103,7 @@ echo "          $COUNTIMPORT Decisions To Add"
 
 #import into crowdsec
 echo "-----> Running Import"
-check for cscli and  run import based on crowdsec install
+#check for cscli and  run import based on crowdsec install
 if command -v cscli >/dev/null 2>&1; then
     echo "CSCLI Found, Running CSCLI Commands."
     cat "$IMPORT" | cscli decisions import -i - --format values --duration "$DURATION" --reason "Threats"
