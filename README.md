@@ -8,6 +8,7 @@
  Easy configuration via a simple yaml file\
  Automated blocklist pulling and import every 6 hours\
  Filters out duplicate entries from pulled lists\
+ Checks IP's against geopip-shell if installed to only have to created decisions for items it doesn't already block (only if installed)
  Checks IP's against the Cidr ranges from pulled lists to reduce redundant decisions\
  Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
  Finally checks IP's against existing IP decisions to reduce redundant decisions\
@@ -15,6 +16,8 @@
  Can run crowdsec import for native install or docker container
 
 ### **Requirments and installation**
+
+ Not required but highly recommended to have geoip-shell for geoblocking and in whitelist mode so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)
  Requires yq & grepcidr which both will be installed if needed during installation\
  Systemd for scheduling and automation\
  Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)

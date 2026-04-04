@@ -23,9 +23,15 @@ urls_standard:
   -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shodan.txt
   -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shadowserver.txt
   -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/normshield.txt
+  -  https://raw.githubusercontent.com/stamparm/ipsum/refs/heads/master/levels/2.txt
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_abusers_1d.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level2.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level3.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level4.netset
 #Requires abipdb_filter
 #Can add more from this repo if wanted
 #Can also be left blank and it will be skipped
 urls_abuseipdb:
   -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/stats/hallofshame/subnets/abuseipdb-s99-hallofshame-all-75percent.ipv4
   -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/abuseipdb-s100-3d.ipv4
+  

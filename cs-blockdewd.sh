@@ -17,7 +17,11 @@ IPLIST="ip_list.ipls"
 CIDRLIST="cidr_list.ipls"
 INPUT1="input1.ipls"
 INPUT2="input2.ipls"
+GSIPLIST="geoip_list.ipls"
+GEOIP="0"
 
+#check for geoip-shell
+command -v geoip-shell >/dev/null 2>&1 && GEOIP="1"
 
 #set funchtions
 fetch1() {
@@ -63,6 +67,15 @@ sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' > "$CIDRLIST"
 COUNTCIDR=$(wc -l < "$CIDRLIST")
 
+#check IPLIST against whitelist by geoip
+if [ -n "$GEOIP" ]; then
+    geoip-shell lookup -F "$IPLIST" > "$GSIPLIST"
+    echo "-----> Checking IPs Against GEOIP-SHELL"
+else
+    cat "$IPLIST" > "$GSIPLIST"
+    echo "-----> GEOIP-SHELL Missing Skip Check"
+fi
+
 
 #check esisting cscli-import decisions
 echo "-----> Check Existing Cidr Decisions"
@@ -72,7 +85,7 @@ grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' "$DECS" > "$CI
 
 #remove ips covered by cidr ranges
 echo "-----> Removing IPs Covered By Cidr Ranges"
-grepcidr -v -f "$CIDRLIST" "$IPLIST" > "$INPUT1"
+grepcidr -v -f "$CIDRLIST" "$GSIPLIST" > "$INPUT1"
 grepcidr -v -f "$CIDRDECS" "$INPUT1" > "$INPUT2"
 COUNTIP=$(wc -l < "$INPUT2")
 sleep 1
