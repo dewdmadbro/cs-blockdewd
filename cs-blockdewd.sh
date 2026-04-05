@@ -75,7 +75,12 @@ else
     cat "$IPLIST" > "$GSIPLIST"
     echo "-----> GEOIP-SHELL Missing Skip Check"
 fi
-
+if [ -n "$GEOIP" ]; then
+    COUNTGS=$(wc -l < "$GSIPLIST")
+    COUNTGEOIP=$(( COUNTIP - COUNTGS ))
+else
+    COUNTGS="0"
+fi
 
 #check esisting cscli-import decisions
 echo "-----> Check Existing Cidr Decisions"
@@ -118,10 +123,11 @@ echo ""
 echo ""
 echo "-----> Summary"
 echo "--------------------------------------------------"
+echo "   ~Cidrs fetched for input          : $COUNTCIDR"
+echo "   ~IPs fetched for input            : $COUNTIP"
 echo "   ~CIDRs already in crowdsec        : $COUNTCIDRDECS"
 echo "   ~IPs already in crowdsec          : $COUNTIPDECS"
-echo "   ~IPs fetched for input            : $COUNTIP"
-echo "   ~Cidrs fetched for input          : $COUNTCIDR"
+echo "   ~IPs blocked by geoip-shell       : $COUNTGEOIP" 
 echo "   ~Total decisions added            : $COUNTIMPORT"
 echo "--------------------------------------------------"
 echo ""
