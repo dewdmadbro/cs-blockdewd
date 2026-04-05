@@ -15,7 +15,7 @@
  Imports into crowdsec while only creating 1 alert as to not flood logs\
  Can run crowdsec import for native install or docker container\
 
-### **Requirments and installation**
+### **Requirements and installation**
 
  Not required but highly recommended to have geoip-shell for geoblocking MUST be in whitelist mode or this will NOT WORK so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
  Requires yq & grepcidr which both will be installed if needed during installation\
@@ -55,8 +55,8 @@
 
  **To uninstall**
  
-        cd cs-blockdewd-0.75
-        sudo ./cs-blockdewd.sh remove
+        cd blockdewd
+        sudo ./blockdewd.sh remove
 
  This will disble the cs-blockdewd.service and cs-blockdewd.timer\
  Then it will remove the files and reload the systemd daemon\
