@@ -71,11 +71,11 @@
 
  **To remove decisions**
 
-    Docker install(replace crowdsec with your container name if different)
+ Docker install(replace crowdsec with your container name if different)
         
         sudo docker exec crowdsec cscli decisions delete --origin cscli-import
 
-    Native install
+ Native install
         
         cscli decisions delete --origin cscli-import
 
