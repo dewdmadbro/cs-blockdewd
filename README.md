@@ -66,8 +66,8 @@
  
  To update run the following
 
-        cd cs-blockdewd-0.75
-        sudo ./cs-blockdewd.sh update
+        cd blockdewd
+        sudo ./blockdewd.sh update
 
  **To remove decisions**
 
