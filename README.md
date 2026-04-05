@@ -31,7 +31,7 @@
         | sed 's/"//g' )     \
         ; curl -L -o cs-blockdewd.tar.gz $LOCATION
 
- Then extract the files, then check the config.yaml and edit as needed per comments within
+ Then extract the files
 
         tar -xvzf cs-blockdewd.tar.gz --one-top-level --strip-components=1
         rm cs-blockdewd.tar.gz
@@ -41,10 +41,10 @@
         cd cs-blockdewd
         nano config.yaml
 
- Once done with config you will need to make cs-blockdewd.sh executable and then run install
+ Once done with config you will need to make blockdewd.sh executable and then run install
 
-        chmod +x cs-blockdewd.sh
-        sudo ./cs-blockdewd.sh install
+        chmod +x blockdewd.sh
+        sudo ./blockdewd.sh install
 
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
