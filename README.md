@@ -17,25 +17,34 @@
 
 ### **Requirments and installation**
 
- Not required but highly recommended to have geoip-shell for geoblocking and in whitelist mode so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
+ Not required but highly recommended to have geoip-shell for geoblocking MUST be in whitelist mode or this will NOT WORK so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
  Requires yq & grepcidr which both will be installed if needed during installation\
  Systemd for scheduling and automation\
  Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)
 
  To install download via command line
 
-        curl -L -o cs-blockdewd.tar.gz  https://github.com/dewdmadbro/cs-blockdewd/archive/refs/tags/V0.62.tar.gz
+        LOCATION=$(curl -s https://api.github.com/repos/dewdmadbro/cs-blockdewd/releases/latest \
+        | grep "tarball_url" \
+        | awk '{ print $2 }' \
+        | sed 's/,$//'       \
+        | sed 's/"//g' )     \
+        ; curl -L -o cs-blockdewd.tar.gz $LOCATION
 
  Then extract the files, then check the config.yaml and edit as needed per comments within
 
-        tar -xvzf cs-blockdewd.tar.gz
+        tar -xvzf cs-blockdewd.tar.gz --one-top-level --strip-components=1
         rm cs-blockdewd.tar.gz
 
- Once done with config you will need to make blockdewd.sh executable and then run install
+ Read and edit config.yaml replace nano with your editor
 
-        cd cs-blockdewd-0.62
-        chmod +x blockdewd.sh
-        sudo ./blockdewd.sh install
+        cd cs-blockdewd
+        nano config.yaml
+
+ Once done with config you will need to make cs-blockdewd.sh executable and then run install
+
+        chmod +x cs-blockdewd.sh
+        sudo ./cs-blockdewd.sh install
 
  During installation it will check for yq & grepcidr and install if needed\
  Also the systemd service and timer will be generated\
@@ -46,8 +55,8 @@
 
  **To uninstall**
  
-        cd cs-blockdewd-Latest
-        sudo ./blockdewd.sh remove
+        cd cs-blockdewd-0.75
+        sudo ./cs-blockdewd.sh remove
 
  This will disble the cs-blockdewd.service and cs-blockdewd.timer\
  Then it will remove the files and reload the systemd daemon\
@@ -55,5 +64,18 @@
 
  **To update**
  
- Currently I do not have a dedicated update mechanism\
- Best way to do it now is to uninstall and then download latest and follow installation instructions
+ To update run the following
+
+        cd cs-blockdewd-0.75
+        sudo ./cs-blockdewd.sh update
+
+ **To remove decisions**
+
+    Docker install(replace crowdsec with your container name if different)
+        
+        sudo docker exec crowdsec cscli decisions delete --origin cscli-import
+
+    Native install
+        
+        cscli decisions delete --origin cscli-import
+

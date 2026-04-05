@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-    echo "Usage: $0 [install|remove]"
+    echo "Usage: $0 [install|remove|run|update]"
     exit 1
 }
 
@@ -60,7 +60,7 @@ Description=pull lists and run crowdsec blockist imports every $TIMER hours
 [Service]
 Type=oneshot
 WorkingDirectory=$PWD
-ExecStart=$PWD/cs-blockdewd.sh
+ExecStart=$PWD/blockdewd.sh run
 StandardOutput=file:$PWD/cs-blockdewd.log
 [Install]
 WantedBy=multi-user.target
@@ -152,8 +152,22 @@ remove() {
     sleep 3
 }
 
+run() {
+    bash "$PWD/cs-blockdewd.sh"
+}
+
+update() {
+    echo "-----> updating"
+    curl -s "https://raw.githubusercontent.com/dewdmadbro/cs-blockdewd/refs/heads/main/cs-blockdewd.sh" > $PWD/cs-blockdewd.sh
+    chmod +x $PWD/cs-blockdewd.sh
+    echo "-----> update complete"
+}
+
 case "$1" in
     install) install ;;
     remove)  remove  ;;
+    run)     run     ;;
+    update)  update  ;;
     *)       usage   ;;
 esac
+
