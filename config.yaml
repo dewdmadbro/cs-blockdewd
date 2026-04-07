@@ -8,6 +8,9 @@ cs_container: 'crowdsec'
 bouncerkey: 'crowdsec bouncer key'
 #decision duration recommended 72h
 ban_duration: '72h'
+#custom blocklist 
+#save blocklist in your cs-blockdewd directory and replace <0> with the file name
+myblocklist: 'blocklist.txt'
 #Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
 abipdb_filter: '# '
 #Lists need no filtering or only '#' needs filtered

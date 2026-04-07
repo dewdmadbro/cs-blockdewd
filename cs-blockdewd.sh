@@ -5,6 +5,7 @@ KEY=$(yq -r '.bouncerkey' config.yaml)
 DURATION=$(yq -r '.ban_duration' config.yaml)
 CS=$(yq -r '.cs_container' config.yaml)
 V1=$(yq -r '.abipdb_filter' config.yaml)
+CUSTOMLIST=$(yq -r '.myblocklist' config.yaml)
 readarray -t URL1_LIST < <(yq -r '.urls_standard[]' config.yaml)
 readarray -t URL2_LIST < <(yq -r '.urls_abuseipdb[]' config.yaml)
 #Set variables
@@ -66,6 +67,18 @@ echo "-----> Removing Duplicates & Sorting"
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$IPLIST"
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' > "$CIDRLIST"
 COUNTCIDR=$(wc -l < "$CIDRLIST")
+
+#check for custom blocklist and if it exists ammend the IPLIST
+custom_blocklist() {
+    if [[ ! -f "$CUSTOMLIST" ]]; then
+        echo "-----> Custom blocklist not found skipping"
+    else
+        cat "$CUSTOMLIST" >> "$IPLIST" 
+        ehco "-----> Custom blocklist added to processing"
+    fi
+}
+echo "-----> Checking for custom blocklist"
+custom_blocklist
 
 #check IPLIST against whitelist by geoip
 if [ -n "$GEOIP" ]; then
