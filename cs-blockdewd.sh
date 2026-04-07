@@ -74,11 +74,12 @@ custom_blocklist() {
         echo "-----> Custom blocklist not found skipping"
     else
         cat "$CUSTOMLIST" >> "$IPLIST" 
-        ehco "-----> Custom blocklist added to processing"
+        echo "-----> Custom blocklist added to processing"
     fi
 }
 echo "-----> Checking for custom blocklist"
 custom_blocklist
+COUNTIP=$(wc -l < "$IPLIST")
 
 #check IPLIST against whitelist by geoip
 if [ -n "$GEOIP" ]; then
@@ -105,7 +106,6 @@ grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' "$DECS" > "$CI
 echo "-----> Removing IPs Covered By Cidr Ranges"
 grepcidr -v -f "$CIDRLIST" "$GSIPLIST" > "$INPUT1"
 grepcidr -v -f "$CIDRDECS" "$INPUT1" > "$INPUT2"
-COUNTIP=$(wc -l < "$INPUT2")
 sleep 1
 
 #set new ips and cidr for import & count
