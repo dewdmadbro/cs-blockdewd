@@ -157,10 +157,25 @@ run() {
 }
 
 update() {
-    echo "-----> updating"
-    curl -s "https://raw.githubusercontent.com/dewdmadbro/cs-blockdewd/refs/heads/main/cs-blockdewd.sh" > $PWD/cs-blockdewd.sh
-    chmod +x $PWD/cs-blockdewd.sh
-    echo "-----> update complete"
+    echo "updating....."
+    #curl lastest package
+    LOCATION=$(curl -s https://api.github.com/repos/dewdmadbro/cs-blockdewd/releases/latest \
+    | grep "tarball_url" \
+    | awk '{ print $2 }' \
+    | sed 's/,$//'       \
+    | sed 's/"//g' )     \
+    ; curl -L -o cs-blockdewd.tar.gz $LOCATION
+    sleep 1
+
+    #extract files overwriting files excluding config
+    tar -xvzf cs-blockdewd.tar.gz --strip-components=1 --exclude="config.yaml"
+    rm cs-blockdewd.tar.gz
+
+    #makes files excutable
+    chmod +x blockdewd.sh
+    chmod +x cs-blockdewd.sh
+    echo "complete....."
+    sleep 1
 }
 
 case "$1" in

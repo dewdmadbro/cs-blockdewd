@@ -15,7 +15,7 @@
  Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
  Finally checks IP's against existing IP decisions to reduce redundant decisions\
  Imports into crowdsec while only creating 1 alert as to not flood logs\
- Can run crowdsec import for native install or docker container\
+ Can run crowdsec import for native install or docker container
 
 ### **Requirements and installation**
 
