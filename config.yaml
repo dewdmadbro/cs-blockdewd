@@ -11,27 +11,34 @@ ban_duration: '72h'
 #custom blocklist 
 #save blocklist in your cs-blockdewd directory and replace <0> with the file name
 myblocklist: 'blocklist.txt'
+#geoip-shell mode if set wrong script will fail
+#valid inputs
+# 'whitelist'
+# 'blacklist'
+blocking_mode: 'whitelist'
 #Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
 abipdb_filter: '# '
 #Lists need no filtering or only '#' needs filtered
 #Can add more
-#Firehol Level 4 potentially adds 90k+ decisions without geoip-shell uncomment with caution
+#Commented lines add a lot of decisions (approx 200K )without geoip-shell uncomment with caution
 urls_standard:
-  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level1.netset
   -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-drop.ipv4
   -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-asndrop.ipv4
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/et_block.netset
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/criminalip.txt
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/censys.txt
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/openportstats.txt
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shodan.txt
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/shadowserver.txt
-  -  https://raw.githubusercontent.com/Connie-Wild/scanner-ip-list/refs/heads/main/normshield.txt
   -  https://raw.githubusercontent.com/stamparm/ipsum/refs/heads/master/levels/2.txt
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_abusers_1d.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level1.netset
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level2.netset
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level3.netset
-#  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level4.netset
+ # -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level4.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/ciarmy.ipset
+  -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Tunnels
+  -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Threats_Unclassified
+  -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Threats
+ # -  https://raw.githubusercontent.com/romainmarcoux/malicious-ip/refs/heads/main/malicious-ip-by-country/full-us-aa.txt
+ # -  https://raw.githubusercontent.com/romainmarcoux/malicious-ip/refs/heads/main/malicious-ip-by-country/full-us-ab.txt
+  -  https://raw.githubusercontent.com/elliotwutingfeng/ThreatFox-IOC-IPs/refs/heads/main/ips.txt
+  -  https://binarydefense.com/banlist.txt
 #Requires abipdb_filter
 #Can add more from this repo if wanted
 #Can also be left blank and it will be skipped

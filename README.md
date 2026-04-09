@@ -3,7 +3,7 @@
  Easy and automated blocklist pulling and importing for crowdsec aimed at reducing redundant decisions and minimal impact on hardware. Designed to run as a systemd service for a set and forget approach once configured.
 
  **Disclaimer**
-       I only have a Linux mint machine to test on and this is what works for me. I would guess Ubuntu will handle this. I spent a few weeks wokring on this and learning as I go. It may not be the best solution but for my use it has been adequate.
+       I only have a Linux mint machine to test on and this is what works for me. I would guess Ubuntu will handle this. I spent a few weeks working on this and learning as I go. It may not be the best solution but for my use it has been adequate.
 
 ## **Main Features**
 
@@ -19,7 +19,7 @@
 
 ### **Requirements and installation**
 
- Not required but highly recommended to have geoip-shell for geoblocking MUST be in whitelist mode or this will NOT WORK so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
+ Not required but highly recommended to have geoip-shell for geoblocking can be in whitelist or blacklist mode(set in config)so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
  Requires yq & grepcidr which both will be installed if needed during installation\
  Systemd for scheduling and automation\
  Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)
