@@ -15,7 +15,7 @@ myblocklist: 'blocklist.txt'
 #valid inputs
 # 'whitelist'
 # 'blacklist'
-blocking_mode: 'whitelist'
+geoip_mode: 'whitelist'
 #Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
 abipdb_filter: '# '
 #Lists need no filtering or only '#' needs filtered
