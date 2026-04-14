@@ -19,8 +19,8 @@ geoip_mode: 'whitelist'
 #Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
 abipdb_filter: '# '
 #Lists need no filtering or only '#' needs filtered
-#Can add more
-#Commented lines add a lot of decisions (approx 200K )without geoip-shell uncomment with caution
+#This is what I use (can be customized)
+#These lists will add approx 125k decisions with geoip-shell in use(without this is approx 340k)
 urls_standard:
   -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-drop.ipv4
   -  https://raw.githubusercontent.com/borestad/iplists/refs/heads/main/spamhaus/spamhaus-asndrop.ipv4
@@ -30,15 +30,24 @@ urls_standard:
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level1.netset
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level2.netset
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level3.netset
- # -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level4.netset
+  -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/firehol_level4.netset
   -  https://raw.githubusercontent.com/borestad/firehol-mirror/refs/heads/main/ciarmy.ipset
-  -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Tunnels
   -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Threats_Unclassified
   -  https://raw.githubusercontent.com/ShadowWhisperer/IPs/refs/heads/master/Lists/Threats
- # -  https://raw.githubusercontent.com/romainmarcoux/malicious-ip/refs/heads/main/malicious-ip-by-country/full-us-aa.txt
- # -  https://raw.githubusercontent.com/romainmarcoux/malicious-ip/refs/heads/main/malicious-ip-by-country/full-us-ab.txt
   -  https://raw.githubusercontent.com/elliotwutingfeng/ThreatFox-IOC-IPs/refs/heads/main/ips.txt
   -  https://binarydefense.com/banlist.txt
+  -  https://opendbl.net/lists/bruteforce.list
+  -  https://opendbl.net/lists/etknown.list
+  -  https://rules.emergingthreats.net/blockrules/compromised-ips.txt
+  -  https://raw.githubusercontent.com/Naunter/BT_BlockLists/refs/heads/master/list_1.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/iptables-scan-multi_ports.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/ssh-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-generic-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/nginx-req-limit-exceeded.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/refs/heads/main/openappsec-request-rate-limit.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/refs/heads/main/http-dos-swithcing-ua.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/refs/heads/main/http-dos-random-uri.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/refs/heads/main/http-bad-user-agent.json.txt
 #Requires abipdb_filter
 #Can add more from this repo if wanted
 #Can also be left blank and it will be skipped
