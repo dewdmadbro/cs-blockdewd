@@ -6,6 +6,11 @@ usage() {
 }
 
 install() {
+    #sudo check
+    if [[ $EUID -ne 0 ]]; then
+    echo "This must be run as root (use sudo)" >&2
+    exit 1
+    fi
     # check for yq and install if needed
     if command -v yq &> /dev/null; then
         echo "yq is already installed: $(yq --version)"
@@ -99,11 +104,17 @@ EOF
 }
 
 remove() {
+    #sudo check
+    if [[ $EUID -ne 0 ]]; then
+    echo "This must be run as root (use sudo)" >&2
+    exit 1
+    fi
     # stop and disable timer and service
     echo "Stopping and disabling cs-blockdewd timer and service..."
     systemctl stop cs-blockdewd.timer
     systemctl disable cs-blockdewd.timer
     systemctl stop cs-blockdewd.service
+    systemctl disable cs-blockdewd.service
 
     # remove systemd files
     echo "Removing systemd files..."
@@ -112,7 +123,7 @@ remove() {
 
     # reload systemd
     systemctl daemon-reload
-    systemctl reset-failed
+    systemctl reset-failed cs-blockdewd.service cs-blockdewd.timer
 
     echo "cs-blockdewd service and timer removed"
 

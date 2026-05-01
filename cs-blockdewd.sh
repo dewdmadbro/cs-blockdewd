@@ -1,5 +1,13 @@
 #!/bin/bash
 
+
+# Cleanup function to remove temp files on exit (success, error, or interrupt)
+cleanup() {
+    rm -f *.ipls
+    echo "Temporary files cleaned up."
+}
+trap cleanup EXIT
+
 #Load variables from config.yaml
 KEY=$(yq -r '.bouncerkey' config.yaml)
 DURATION=$(yq -r '.ban_duration' config.yaml)
@@ -21,7 +29,7 @@ INPUT1="input1.ipls"
 INPUT2="input2.ipls"
 GSIPLIST="geoip_list.ipls"
 BLOCKED="geoip_blocked.ipls"
-GEOIP="0"
+GEOIP=""
 
 
 #set funchtions
@@ -67,7 +75,7 @@ geoip_mode() {
         blacklist_mode
     else
         echo "[ERROR] Blocking mode incorrectly set please fix and run again."
-        return 1
+        exit 1
     fi
 }
 
@@ -80,7 +88,7 @@ whitelist_mode() {
 blacklist_mode() {
     echo "-----> Removing Unecessary IPs"
     #get the ips matching in the blacklist
-    geoip-shell lookup -F "$SORTED_IP" | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$BLOCKED"
+    geoip-shell lookup -F "$IPLIST" | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$BLOCKED"
     #remove matching ips
     grep -xvFf "$BLOCKED" "$IPLIST" > "$GSIPLIST"
 }
@@ -119,20 +127,17 @@ command -v geoip-shell >/dev/null 2>&1 && GEOIP="1"
 if [ -n "$GEOIP" ]; then
     echo "-----> Checking IPs Against GEOIP-SHELL"
     geoip_mode
-else
-    cat "$IPLIST" > "$GSIPLIST"
-    echo "-----> GEOIP-SHELL Missing Skip Check"
-fi
-if [ -n "$GEOIP" ]; then
     COUNTGS=$(wc -l < "$GSIPLIST")
     COUNTGEOIP=$(( COUNTIP - COUNTGS ))
 else
-    COUNTGS="0"
+    cat "$IPLIST" > "$GSIPLIST"
+    COUNTGEOIP=0
+    echo "-----> GEOIP-SHELL Missing, Skipping Check"
 fi
 
-#check esisting cscli-import decisions
+#check esisting crowdsec decisions
 echo "-----> Check Existing Cidr Decisions"
-curl -s -H "X-Api-Key: $KEY" 'http://127.0.0.1:8080/v1/decisions?type=ban&origins=cscli-import'   -H 'accept: application/json' | jq -r '.[].value' > "$DECS"
+curl -s -H "X-Api-Key: $KEY" 'http://127.0.0.1:8080/v1/decisions?type=ban'   -H 'accept: application/json' | jq -r '.[].value' > "$DECS"
 grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' "$DECS" > "$IPDECS"
 grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' "$DECS" > "$CIDRDECS"
 
@@ -155,7 +160,6 @@ COUNTIPDECS=$(wc -l < "$IPDECS")
 COUNTIMPORT=$(wc -l < "$IMPORT")
 echo "-----> Processing"
 sleep 1
-echo "          $COUNTIMPORT Decisions To Add"
 
 #check for cscli and  run import based on crowdsec install
 echo "-----> Running Import"
@@ -184,7 +188,5 @@ echo "   ~Total decisions added            : $COUNTIMPORT"
 echo "--------------------------------------------------"
 echo ""
 sleep 3
-echo "-> Cleaning Up"
-rm *.ipls
 echo "-> Bye"
 sleep 2
