@@ -39,7 +39,7 @@ GEOIP=""
 #set funchtions
 fetch1() {
     local url=$1
-    info -n "-----> Fetching  "
+    info "-----> Fetching  "
     curl -s "$url" | grep -v '^#' >> "$PULL"
     count1
 }
@@ -49,7 +49,7 @@ count1() {
 }
 fetch2() {
     local url=$1
-    info -n "-----> Fetching  "
+    info "-----> Fetching  "
     curl -s "$url" | grep "$V1" | grep -v '^#' | awk '{print $1}' >> "$PULL"
     count1
 }
