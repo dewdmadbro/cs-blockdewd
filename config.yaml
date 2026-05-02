@@ -16,6 +16,8 @@ myblocklist: 'blocklist.txt'
 # 'whitelist'
 # 'blacklist'
 geoip_mode: 'whitelist'
+#Can be left as is or add your 2 letter country code like so -> '# US'  if you have geoblocking this will reduce ip's needed and load on your crowsdec
+abipdb_filter: '# '
 #Lists need no filtering or only '#' needs filtered
 #This is what I use (can be customized)
 #These lists will add approx 125k decisions with geoip-shell in use(without this is approx 340k)
@@ -38,4 +40,24 @@ urls_standard:
   -  https://opendbl.net/lists/etknown.list
   -  https://rules.emergingthreats.net/blockrules/compromised-ips.txt
   -  https://raw.githubusercontent.com/Naunter/BT_BlockLists/refs/heads/master/list_1.ThreatFox
-  -  https://raw.githubusercontent.com/dewdmadbro/cs-blockdewd/refs/heads/main/blockdewd.sh
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/exim-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-bad-user-agent.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-bypass-cache.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-invalid-http-versions.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-random-uri.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-swithcing-ua.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-generic-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/iptables-scan-multi_ports.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/mysql-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/nginx-req-limit-exceeded.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/openappsec-request-rate-limit.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/smb-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/ssh-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/tcpudp-flood-traefik.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/telnet-bf.json.txt
+#Requires abipdb_filter
+#Can add more from this repo if wanted
+#Can also be left blank and it will be skipped
+urls_abuseipdb:
+  -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/stats/hallofshame/subnets/abuseipdb-s99-hallofshame-all-75percent.ipv4
+  -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/refs/heads/main/abuseipdb-s100-3d.ipv4

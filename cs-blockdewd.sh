@@ -4,7 +4,7 @@
 # Cleanup function to remove temp files on exit (success, error, or interrupt)
 cleanup() {
     rm -f *.ipls
-    echo "Temporary ipls cleaned up."
+    echo "Temporary files cleaned up."
 }
 trap cleanup EXIT
 
@@ -12,6 +12,7 @@ trap cleanup EXIT
 KEY=$(yq -r '.bouncerkey' config.yaml)
 DURATION=$(yq -r '.ban_duration' config.yaml)
 CS=$(yq -r '.cs_container' config.yaml)
+V1=$(yq -r '.abipdb_filter' config.yaml)
 MODE=$(yq -r '.geoip_mode' config.yaml)
 CUSTOMLIST=$(yq -r '.myblocklist' config.yaml)
 readarray -t URL1_LIST < <(yq -r '.urls_standard[]' config.yaml)
@@ -41,6 +42,12 @@ fetch1() {
 count1() {
     COUNT=$(wc -l < "$PULL")
     echo "          $COUNT Entries To Process"
+}
+fetch2() {
+    local url=$1
+    echo -n "-----> Fetching  "
+    curl -s "$url" | grep "$V1" | grep -v '^#' | awk '{print $1}' >> "$PULL"
+    count1
 }
 
 #check for custom blocklist and if it exists ammend the IPLIST
