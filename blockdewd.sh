@@ -5,17 +5,21 @@ usage() {
     exit 1
 }
 
+# Helpers
+die()  { echo "❌  $*" >&2; exit 1; }
+info() { echo "ℹ️   $*"; }
+ok()   { echo "✅  $*"; }
+
 install() {
     #sudo check
     if [[ $EUID -ne 0 ]]; then
-    echo "This must be run as root (use sudo)" >&2
-    exit 1
+    die "This must be run as root (use sudo)"
     fi
     # check for yq and install if needed
     if command -v yq &> /dev/null; then
-        echo "yq is already installed: $(yq --version)"
+        ok "yq is already installed: $(yq --version)"
     else
-        echo "yq not found, installing..."
+        info "yq not found, installing..."
         if command -v apt &> /dev/null; then
             echo "Using apt..."
             apt install -y yq
@@ -26,11 +30,11 @@ install() {
             echo "Using yum..."
             yum install -y yq
         else
-            echo "No package manager found, falling back to direct download..."
+            info "No package manager found, falling back to direct download..."
             wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
             chmod +x /usr/local/bin/yq
         fi
-        echo "yq installed: $(yq --version)"
+        ok "yq installed: $(yq --version)"
     fi
 
     # Load variables from config.yaml
@@ -38,9 +42,9 @@ install() {
 
     # check for grepcidr and install if needed
     if command -v grepcidr &> /dev/null; then
-        echo "grepcidr is already installed: $(grepcidr 2>&1 | head -1)"
+        ok "grepcidr is already installed: $(grepcidr 2>&1 | head -1)"
     else
-        echo "grepcidr not found, installing..."
+        info "grepcidr not found, installing..."
         if command -v apt &> /dev/null; then
             echo "Using apt..."
             apt install -y grepcidr
@@ -51,8 +55,7 @@ install() {
             echo "Using yum..."
             yum install -y grepcidr
         else
-            echo "No supported package manager found. Please install grepcidr manually." >&2
-            exit 1
+            die "No supported package manager found. Please install grepcidr manually."
         fi
     fi
 
@@ -106,18 +109,17 @@ EOF
 remove() {
     #sudo check
     if [[ $EUID -ne 0 ]]; then
-    echo "This must be run as root (use sudo)" >&2
-    exit 1
+    die "This must be run as root (use sudo)"
     fi
     # stop and disable timer and service
-    echo "Stopping and disabling cs-blockdewd timer and service..."
+    info "Stopping and disabling cs-blockdewd timer and service..."
     systemctl stop cs-blockdewd.timer
     systemctl disable cs-blockdewd.timer
     systemctl stop cs-blockdewd.service
     systemctl disable cs-blockdewd.service
 
     # remove systemd files
-    echo "Removing systemd files..."
+    info "Removing systemd files..."
     rm -f /etc/systemd/system/cs-blockdewd.service
     rm -f /etc/systemd/system/cs-blockdewd.timer
 
@@ -125,7 +127,7 @@ remove() {
     systemctl daemon-reload
     systemctl reset-failed cs-blockdewd.service cs-blockdewd.timer
 
-    echo "cs-blockdewd service and timer removed"
+    ok "cs-blockdewd service and timer removed"
 
     # optionally remove yq
     read -p "Remove yq? (y/n): " answer
@@ -139,9 +141,9 @@ remove() {
         else
             rm -f /usr/local/bin/yq
         fi
-        echo "yq removed"
+        ok "yq removed"
     else
-        echo "yq kept"
+        ok "yq kept"
     fi
 
     # optionally remove grepcidr
@@ -154,11 +156,11 @@ remove() {
         elif command -v yum &> /dev/null; then
             yum remove -y grepcidr
         else
-            echo "No supported package manager found. Please remove grepcidr manually." >&2
+            info "No supported package manager found. Please remove grepcidr manually." >&2
         fi
-        echo "grepcidr removed"
+        ok "grepcidr removed"
     else
-        echo "grepcidr kept"
+        ok "grepcidr kept"
     fi
     sleep 3
 }
@@ -168,7 +170,7 @@ run() {
 }
 
 update() {
-    echo "updating....."
+    info "updating....."
     #curl lastest package
     LOCATION=$(curl -s https://api.github.com/repos/dewdmadbro/cs-blockdewd/releases/latest \
     | grep "tarball_url" \
@@ -185,7 +187,7 @@ update() {
     #makes files excutable
     chmod +x blockdewd.sh
     chmod +x cs-blockdewd.sh
-    echo "complete....."
+    ok "complete....."
     sleep 1
 }
 
