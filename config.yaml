@@ -17,10 +17,12 @@ myblocklist: 'blocklist.txt'
 # 'blacklist'
 geoip_mode: 'whitelist'
 #Lists need no filtering or only '#' needs filtered
-#This is what I use (can be customized)
-#These lists will add approx 125k decisions with geoip-shell in use(without this it is approx 340k)
+#Can be customized
+#These lists will add approx 125k decisions with geoip-shell in use(without this it is approx 300k)
+#If you are using Crowdsec Firewall bouncer you may need to ajust hash value to load all ips
+#Uncomment top one for much more agressive blocking CAUTION IT MAY OVERLOAD WEAKER SYSTEMS
 urls_standard:
-  -  https://raw.githubusercontent.com/dewdmadbro/ip-blocklist-dewd/refs/heads/main/data/output/aggregated.txt
+#  -  https://raw.githubusercontent.com/dewdmadbro/ip-blocklist-dewd/refs/heads/main/data/output/aggregated.txt
   -  https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/top_100000.txt
   -  https://opendbl.net/lists/blocklistde-all.list
   -  https://raw.githubusercontent.com/elliotwutingfeng/ThreatFox-IOC-IPs/refs/heads/main/ips.txt
