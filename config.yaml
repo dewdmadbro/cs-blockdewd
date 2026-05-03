@@ -21,6 +21,11 @@ geoip_mode: 'whitelist'
 #These lists will add approx 125k decisions with geoip-shell in use(without this it is approx 340k)
 urls_standard:
   -  https://raw.githubusercontent.com/dewdmadbro/ip-blocklist-dewd/refs/heads/main/data/output/aggregated.txt
+  -  https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/top_100000.txt
+  -  https://opendbl.net/lists/blocklistde-all.list
+  -  https://raw.githubusercontent.com/elliotwutingfeng/ThreatFox-IOC-IPs/refs/heads/main/ips.txt
+  -  https://raw.githubusercontent.com/Naunter/BT_BlockLists/refs/heads/master/list_1.txt
+  -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/abuseipdb-s100-30d.ipv4
   -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/exim-bf.json.txt
   -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-bad-user-agent.json.txt
   -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-bypass-cache.json.txt
