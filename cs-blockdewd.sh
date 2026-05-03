@@ -25,6 +25,7 @@ IPDECS="ip_decs.ipls"
 DECS="raw_decs.ipls"
 CIDRDECS="cidr_decs.ipls"
 IMPORT="import.ipls"
+RAW="raw.ipls"
 PULL="pull_list.ipls"
 IPLIST="ip_list.ipls"
 CIDRLIST="cidr_list.ipls"
@@ -39,11 +40,11 @@ GEOIP=""
 fetch1() {
     local url=$1
     info "-----> Fetching  "
-    curl -s "$url" | grep -v '^#' >> "$PULL"
+    curl -s "$url" | grep -v '^#' >> "$RAW"
     count1
 }
 count1() {
-    COUNT=$(wc -l < "$PULL")
+    COUNT=$(wc -l < "$RAW")
     ok "          $COUNT Entries To Process"
 }
 
@@ -52,7 +53,7 @@ custom_blocklist() {
     if [[ ! -f "$CUSTOMLIST" ]]; then
         info "-----> Custom blocklist not found skipping"
     else
-        cat "$CUSTOMLIST" >> "$PULL" 
+        cat "$CUSTOMLIST" >> "$RAW" 
         ok "-----> Custom blocklist added to processing"
         count1
     fi
@@ -103,6 +104,7 @@ info "-----> Checking for custom blocklist"
 custom_blocklist
 sleep 1
 ok "-----> Removing Duplicates & Sorting"
+sed 's/\/32//g' "$RAW" > "$PULL"
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$IPLIST"
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' > "$CIDRLIST"
 COUNTCIDR=$(wc -l < "$CIDRLIST")
