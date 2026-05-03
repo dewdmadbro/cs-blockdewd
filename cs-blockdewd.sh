@@ -20,7 +20,6 @@ V1=$(yq -r '.abipdb_filter' config.yaml)
 MODE=$(yq -r '.geoip_mode' config.yaml)
 CUSTOMLIST=$(yq -r '.myblocklist' config.yaml)
 readarray -t URL1_LIST < <(yq -r '.urls_standard[]' config.yaml)
-readarray -t URL2_LIST < <(yq -r '.urls_abuseipdb[]' config.yaml)
 #Set variables
 IPDECS="ip_decs.ipls"
 DECS="raw_decs.ipls"
@@ -46,12 +45,6 @@ fetch1() {
 count1() {
     COUNT=$(wc -l < "$PULL")
     ok "          $COUNT Entries To Process"
-}
-fetch2() {
-    local url=$1
-    info "-----> Fetching  "
-    curl -s "$url" | grep "$V1" | grep -v '^#' | awk '{print $1}' >> "$PULL"
-    count1
 }
 
 #check for custom blocklist and if it exists ammend the IPLIST
@@ -101,15 +94,6 @@ info "-----> Fetching Lists"
 for url in "${URL1_LIST[@]}"; do
     fetch1 "$url"
 done
-# Loop through Abuse IPDB style lists and fetch
-if [[ -n "$URL2_LIST" ]]; then
-    ok "-----> Abuse IP Database Lists Found "
-    for url in "${URL2_LIST[@]}"; do
-        fetch2 "$url"
-    done
-else
-    info "-----> No Additional Lists"
-fi
 
 #Sorting & Remove Duplicates
 echo ""
