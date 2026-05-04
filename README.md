@@ -1,83 +1,257 @@
-# **CS-BlockDewd**
+# 🛡️ CS-BlockDewd
 
- Easy and automated blocklist pulling and importing for crowdsec aimed at reducing redundant decisions and minimal impact on hardware. Designed to run as a systemd service for a set and forget approach once configured.
+> Automated blocklist pulling and importing for [CrowdSec](https://www.crowdsec.net/), designed to reduce redundant decisions and minimize hardware impact.
 
- **Disclaimer**
-       I only have a Linux mint machine to test on and this is what works for me. I would guess Ubuntu will handle this. I spent a few weeks working on this and learning as I go. It may not be the best solution but for my use it has been adequate.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)]()
 
-## **Main Features**
+---
 
- Easy configuration via a simple yaml file\
- Automated blocklist pulling and import every 6 hours\
- Filters out duplicate entries from pulled lists\
- Checks IP's against geopip-shell if installed so we only have to created decisions for items it doesn't already block (only if installed)\
- Checks IP's against the Cidr ranges from pulled lists to reduce redundant decisions\
- Checks IP's against the Cidr ranges in active decisions to reduce redundant decisions\
- Finally checks IP's against existing IP decisions to reduce redundant decisions\
- Imports into crowdsec while only creating 1 alert as to not flood logs\
- Can run crowdsec import for native install or docker container
+## 📋 Table of Contents
 
-### **Requirements and installation**
+- [Overview](#overview)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Updating](#updating)
+- [Uninstallation](#uninstallation)
+- [Removing Decisions](#removing-decisions)
+- [How It Works](#how-it-works)
+- [Troubleshooting](#troubleshooting)
+- [Disclaimer](#disclaimer)
 
- Not required but highly recommended to have geoip-shell for geoblocking can be in whitelist or blacklist mode(set in config)so go get that first here -> [GEOIP-SHELL](https://github.com/friendly-bits/geoip-shell?tab=readme-ov-file)\
- Requires yq & grepcidr which both will be installed if needed during installation\
- Systemd for scheduling and automation\
- Crowdsec bouncerkey, see crowdsec documentation here -> [Crowdsec Bouncers](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/)
+---
 
- To install download via command line
+## Overview
 
-        LOCATION=$(curl -s https://api.github.com/repos/dewdmadbro/cs-blockdewd/releases/latest \
-        | grep "tarball_url" \
-        | awk '{ print $2 }' \
-        | sed 's/,$//'       \
-        | sed 's/"//g' )     \
-        ; curl -L -o cs-blockdewd.tar.gz $LOCATION
+CS-BlockDewd automates the process of fetching IP blocklists from multiple sources and importing them into CrowdSec. It intelligently filters out duplicate and redundant entries before creating decisions, resulting in:
 
- Then extract the files
+- ✅ Cleaner decision lists
+- ✅ Reduced log flooding (only 1 alert per import)
+- ✅ Minimal hardware impact
+- ✅ Set-and-forget operation via systemd
 
-        tar -xvzf cs-blockdewd.tar.gz --one-top-level --strip-components=1
-        rm cs-blockdewd.tar.gz
+---
 
- Read and edit config.yaml replace nano with your editor
+## Features
 
-        cd cs-blockdewd
-        nano config.yaml
+| Feature | Description |
+|---------|-------------|
+| **YAML Configuration** | Simple, human-readable config via `config.yaml` |
+| **Automated Scheduling** | Runs on a configurable timer via systemd (default: every 6 hours) |
+| **Duplicate Filtering** | Removes duplicate entries from all pulled lists |
+| **GeoIP Integration** | Optional `geoip-shell` integration to skip already-geoblocked IPs |
+| **CIDR Range Checking** | Prevents redundant decisions by checking against existing CIDR ranges |
+| **Active Decision Checking** | Validates against existing CrowdSec decisions before importing |
+| **Docker & Native Support** | Works with both CrowdSec Docker containers and native installations |
+| **Custom Blocklists** | Support for adding your own custom blocklist file |
 
- Once done with config you will need to make blockdewd.sh executable and then run install
+---
 
-        chmod +x blockdewd.sh
-        sudo ./blockdewd.sh install
+## Requirements
 
- During installation it will check for yq & grepcidr and install if needed\
- Also the systemd service and timer will be generated\
- It will map the service to run cs-blockdewd.sh and generate a log in the extracted folder
- The final thing it will do is run the service for the first time\  
+### Required
+- **Linux** (tested on Linux Mint; Ubuntu/Debian-based distros recommended)
+- **CrowdSec** installed and running (native or Docker)
+- **systemd** for scheduling and automation
+- **CrowdSec Bouncer API Key** ([docs](https://docs.crowdsec.net/docs/next/cscli/cscli_bouncers_add/))
 
-### **Removal and updating**
+### Optional (Highly Recommended)
+- **[geoip-shell](https://github.com/friendly-bits/geoip-shell)** – Enables geoblocking filtering (whitelist or blacklist mode)
 
- **To uninstall**
- 
-        cd blockdewd
-        sudo ./blockdewd.sh remove
+### Auto-Installed Dependencies
+The installer will automatically install these if missing:
+- **yq** – YAML processor
+- **grepcidr** – CIDR range matching tool
 
- This will disble the cs-blockdewd.service and cs-blockdewd.timer\
- Then it will remove the files and reload the systemd daemon\
- It will also ask if you want to remove yq and grepcidr\
+---
 
- **To update**
- 
- To update run the following
+## Installation
 
-        cd blockdewd
-        sudo ./blockdewd.sh update
+### 1. Download the Latest Release
 
- **To remove decisions**
+```bash
+LOCATION=$(curl -s https://api.github.com/repos/dewdmadbro/cs-blockdewd/releases/latest \
+  | grep "tarball_url" \
+  | awk '{ print $2 }' \
+  | sed 's/,$//'       \
+  | sed 's/"//g' )     \
+; curl -L -o cs-blockdewd.tar.gz $LOCATION
+```
 
- Docker install(replace crowdsec with your container name if different)
-        
-        sudo docker exec crowdsec cscli decisions delete --origin cscli-import
+### 2. Extract Files
 
- Native install
-        
-        cscli decisions delete --origin cscli-import
+```bash
+tar -xvzf cs-blockdewd.tar.gz --one-top-level --strip-components=1
+rm cs-blockdewd.tar.gz
+cd cs-blockdewd
+```
 
+### 3. Configure
+
+Edit the configuration file with your preferred editor:
+
+```bash
+nano config.yaml
+```
+
+### 4. Install & Run
+
+```bash
+chmod +x blockdewd.sh
+sudo ./blockdewd.sh install
+```
+
+The installer will:
+- Check and install `yq` and `grepcidr` if needed
+- Create systemd service and timer files
+- Run the service for the first time
+- Generate logs in the installation directory
+
+---
+
+## Configuration
+
+Edit `config.yaml` to customize behavior:
+
+| Key | Description | Example |
+|-----|-------------|---------|
+| `bouncerkey` | Your CrowdSec API key | `"your-api-key-here"` |
+| `ban_duration` | Duration for imported bans | `"72h"` |
+| `cs_container` | Docker container name (if using Docker) | `"crowdsec"` |
+| `systemd_timer` | Hours between runs | `6h` |
+| `geoip_mode` | GeoIP filtering mode (`whitelist` or `blacklist`) | `"whitelist"` |
+| `myblocklist` | Path to custom blocklist file | `"/path/to/custom.list"` |
+| `urls_standard` | Array of blocklist URLs to fetch | `["https://...", "..."]` |
+
+---
+
+## Usage
+
+### Check Service Status
+
+```bash
+sudo systemctl status cs-blockdewd
+```
+
+### View Timer Schedule & History
+
+```bash
+sudo systemctl list-timers
+```
+
+### View Logs
+
+```bash
+cat cs-blockdewd.log
+```
+
+### Manual Run
+
+```bash
+sudo ./blockdewd.sh run
+```
+
+---
+
+## Updating
+
+```bash
+cd cs-blockdewd
+sudo ./blockdewd.sh update
+```
+
+> **Note:** Updates preserve your `config.yaml` file.
+
+---
+
+## Uninstallation
+
+```bash
+cd cs-blockdewd
+sudo ./blockdewd.sh remove
+```
+
+This will:
+- Stop and disable the systemd service and timer
+- Remove systemd unit files
+- Reload systemd daemon
+- Prompt to remove `yq` and `grepcidr` (optional)
+
+---
+
+## Removing Decisions
+
+To remove all decisions imported by CS-BlockDewd:
+
+### Docker Installation
+```bash
+sudo docker exec crowdsec cscli decisions delete --origin cscli-import
+```
+
+### Native Installation
+```bash
+cscli decisions delete --origin cscli-import
+```
+
+---
+
+## How It Works
+
+```
+┌─────────────────────┐
+│  Fetch Blocklists   │  Downloads IPs from configured URLs
+└─────────┬───────────┘
+          ▼
+┌─────────────────────┐
+│  Remove Duplicates  │  Deduplicates and sorts entries
+└─────────┬───────────┘
+          ▼
+┌─────────────────────┐
+│  GeoIP Filter       │  (Optional) Filters via geoip-shell
+└─────────┬───────────┘
+          ▼
+┌─────────────────────┐
+│  CIDR Check         │  Removes IPs covered by CIDR ranges
+└─────────┬───────────┘
+          ▼
+┌─────────────────────┐
+│  Existing Decisions │  Skips IPs already in CrowdSec
+└─────────┬───────────┘
+          ▼
+┌─────────────────────┐
+│  Import to CrowdSec │  Creates decisions (single alert)
+└─────────────────────┘
+```
+
+---
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Service fails to start | Check logs: `cat cs-blockdewd.log` |
+| API key errors | Verify `bouncerkey` in `config.yaml` |
+| Docker import fails | Confirm container name matches `cs_container` |
+| GeoIP filtering not working | Ensure `geoip-shell` is installed and in PATH |
+
+---
+
+## Disclaimer
+
+> This tool was developed and tested on **Linux Mint**. It should work on Ubuntu and other Debian-based distributions. While it works well for my use case, it may not be the optimal solution for all environments. Use at your own discretion and test in your environment before relying on it in production and make sure you have appropriate allowlists set up.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- [CrowdSec](https://www.crowdsec.net/) – Open-source IPS
+- [geoip-shell](https://github.com/friendly-bits/geoip-shell) – GeoIP lookup tool
+- [yq](https://github.com/mikefarah/yq) – YAML processor
+- [grepcidr](https://github.com/jamespurcell/grepcidr) – CIDR matching utility
