@@ -2,8 +2,9 @@
 
 > Automated blocklist pulling and importing for [CrowdSec](https://www.crowdsec.net/), designed to reduce redundant decisions and minimize hardware impact.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/github/license/dewdmadbro/cs-blockdewd)](https://github.com/dewdmadbro/cs-blockdewd/blob/main/LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux-lightgrey)]()
+[![Latest Release](https://img.shields.io/github/v/release/dewdmadbro/cs-blockdewd)](https://github.com/dewdmadbro/cs-blockdewd/releases/latest)
 
 ---
 
@@ -30,7 +31,7 @@ CS-BlockDewd automates the process of fetching IP blocklists from multiple sourc
 
 - ✅ Cleaner decision lists
 - ✅ Reduced log flooding (only 1 alert per import)
-- ✅ Minimal hardware impact
+- ✅ Hopefuly minimal hardware impact
 - ✅ Set-and-forget operation via systemd
 
 ---
