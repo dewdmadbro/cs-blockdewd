@@ -29,23 +29,20 @@ RAW="raw.ipls"
 PULL="pull_list.ipls"
 IPLIST="ip_list.ipls"
 CIDRLIST="cidr_list.ipls"
-INPUT1="input1.ipls"
-INPUT2="input2.ipls"
 GSIPLIST="geoip_list.ipls"
 BLOCKED="geoip_blocked.ipls"
 GEOIP=""
-
+IPR=""
 
 #set funchtions
 fetch1() {
     local url=$1
-    info "-----> Fetching  "
     curl -s "$url" | grep -v '^#' >> "$RAW"
     count1
 }
 count1() {
     COUNT=$(wc -l < "$RAW")
-    ok "          $COUNT Entries To Process"
+    echo "          $COUNT Entries To Process"
 }
 
 #check for custom blocklist and if it exists ammend the IPLIST
@@ -102,7 +99,6 @@ ok "-----> Fetch Complete"
 count1
 info "-----> Checking for custom blocklist"
 custom_blocklist
-sleep 1
 ok "-----> Removing Duplicates & Sorting"
 sed 's/\/32//g' "$RAW" > "$PULL"
 sort -u "$PULL" | grep -v '^\s*$' | grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' > "$IPLIST"
@@ -124,25 +120,18 @@ else
 fi
 
 #check esisting crowdsec decisions
-info "-----> Check Existing Cidr Decisions"
+info "-----> Check Existing Crodsec Decisions"
 curl -s -H "X-Api-Key: $KEY" 'http://127.0.0.1:8080/v1/decisions?type=ban'   -H 'accept: application/json' | jq -r '.[].value' > "$DECS"
 grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}$' "$DECS" > "$IPDECS"
 grep -E '^([0-9]{1,3}\.){3}[0-9]{1,3}/([0-9]|[1-2][0-9]|3[0-2])$' "$DECS" > "$CIDRDECS"
 
-#remove ips covered by cidr ranges
-ok "-----> Removing IPs Covered By Cidr Ranges"
-grepcidr -v -f "$CIDRLIST" "$GSIPLIST" > "$INPUT1"
-grepcidr -v -f "$CIDRDECS" "$INPUT1" > "$INPUT2"
-sleep 1
-
+#remove ips covered by cidr ranges / crowdsec
 #set new ips and cidr for import & count
+ok "-----> Removing IPs Covered By Cidr Ranges"
 ok "-----> Removing IPs Already In Crowdsec"
-grep -xvFf "$IPDECS" "$INPUT2" > "$IMPORT"
-grep -xvFf "$CIDRDECS" "$CIDRLIST" >> "$IMPORT"
+iprange "$GSIPLIST" "$CIDRLIST" --except "$IPDECS" "$CIDRDECS" > "$IMPORT"
 
 #more stats stuff
-COUNTINPUT2=$(wc -l < "$INPUT2")
-COUNTCIDRDIFF=$(( COUNTGS - COUNTINPUT2 ))
 COUNTCIDRDECS=$(wc -l < "$CIDRDECS")
 COUNTIPDECS=$(wc -l < "$IPDECS")
 COUNTIMPORT=$(wc -l < "$IMPORT")
@@ -171,7 +160,6 @@ echo "   ~IPs fetched for input            : $COUNTIP"
 echo "   ~CIDRs already in crowdsec        : $COUNTCIDRDECS"
 echo "   ~IPs already in crowdsec          : $COUNTIPDECS"
 echo "   ~IPs blocked by geoip-shell       : $COUNTGEOIP" 
-echo "   ~IPs covered by CIDRs             : $COUNTCIDRDIFF"
 echo "   ~Total decisions added            : $COUNTIMPORT"
 echo "--------------------------------------------------"
 echo ""

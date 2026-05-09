@@ -40,22 +40,22 @@ install() {
     # Load variables from config.yaml
     TIMER=$(yq -r '.systemd_timer' config.yaml)
 
-    # check for grepcidr and install if needed
-    if command -v grepcidr &> /dev/null; then
-        ok "grepcidr is already installed: $(grepcidr 2>&1 | head -1)"
+    # check for iprange and install if needed
+    if command -v iprange &> /dev/null; then
+        ok "iprange is already installed: $(iprange 2>&1 | head -1)"
     else
-        info "grepcidr not found, installing..."
+        info "iprange not found, installing..."
         if command -v apt &> /dev/null; then
             echo "Using apt..."
-            apt install -y grepcidr
+            apt install -y iprange
         elif command -v dnf &> /dev/null; then
             echo "Using dnf..."
-            dnf install -y grepcidr
+            dnf install -y iprange
         elif command -v yum &> /dev/null; then
             echo "Using yum..."
-            yum install -y grepcidr
+            yum install -y iprange
         else
-            die "No supported package manager found. Please install grepcidr manually."
+            die "No supported package manager found. Please install iprange manually."
         fi
     fi
 
@@ -146,21 +146,21 @@ remove() {
         ok "yq kept"
     fi
 
-    # optionally remove grepcidr
-    read -p "Remove grepcidr? (y/n): " answer
+    # optionally remove iprange
+    read -p "Remove iprange? (y/n): " answer
     if [[ "$answer" == "y" ]]; then
         if command -v apt &> /dev/null; then
-            apt remove -y grepcidr
+            apt remove -y iprange
         elif command -v dnf &> /dev/null; then
-            dnf remove -y grepcidr
+            dnf remove -y iprange
         elif command -v yum &> /dev/null; then
-            yum remove -y grepcidr
+            yum remove -y iprange
         else
-            info "No supported package manager found. Please remove grepcidr manually." >&2
+            info "No supported package manager found. Please remove iprange manually." >&2
         fi
-        ok "grepcidr removed"
+        ok "iprange removed"
     else
-        ok "grepcidr kept"
+        ok "iprange kept"
     fi
     sleep 3
 }

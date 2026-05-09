@@ -65,7 +65,7 @@ CS-BlockDewd automates the process of fetching IP blocklists from multiple sourc
 ### Auto-Installed Dependencies
 The installer will automatically install these if missing:
 - **yq** – YAML processor
-- **grepcidr** – CIDR range matching tool
+- **iprange** – IP list merging tool
 
 ---
 
@@ -106,7 +106,7 @@ sudo ./blockdewd.sh install
 ```
 
 The installer will:
-- Check and install `yq` and `grepcidr` if needed
+- Check and install `yq` and `iprange` if needed
 - Create systemd service and timer files
 - Run the service for the first time
 - Generate logs in the installation directory
@@ -179,7 +179,7 @@ This will:
 - Stop and disable the systemd service and timer
 - Remove systemd unit files
 - Reload systemd daemon
-- Prompt to remove `yq` and `grepcidr` (optional)
+- Prompt to remove `yq` and `iprange` (optional)
 
 ---
 
@@ -255,4 +255,4 @@ This project is licensed under the [GPL-3.0 License](LICENSE).
 - [CrowdSec](https://www.crowdsec.net/) – Open-source IPS
 - [geoip-shell](https://github.com/friendly-bits/geoip-shell) – GeoIP lookup tool
 - [yq](https://github.com/mikefarah/yq) – YAML processor
-- [grepcidr](https://github.com/jamespurcell/grepcidr) – CIDR matching utility
+- [iprange](https://github.com/firehol/iprange) – IP list merging utility
