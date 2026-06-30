@@ -5,7 +5,7 @@ die()  { echo "❌  $*" >&2; exit 1; }
 info() { echo "ℹ️   $*"; }
 ok()   { echo "✅  $*"; }
 
-# Cleanup function to remove temp files on exit (success, error, or interrupt)
+# Cleanup to remove temp files on exit (success, error, or interrupt)
 cleanup() {
     rm -f *.ipls
     echo "Temporary files cleaned up."
