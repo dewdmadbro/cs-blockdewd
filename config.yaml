@@ -20,7 +20,7 @@ geoip_mode: 'whitelist'
 #Can be customized
 #These lists will add approx 125k decisions with geoip-shell in use(without this it is approx 300k)
 #If you are using Crowdsec Firewall bouncer you may need to ajust hash value to load all ips
-#Uncomment top one for much more agressive blocking CAUTION IT MAY OVERLOAD WEAKER SYSTEMS
+#Uncomment top one for much more agressive blocking CAUTION IT MAY OVERLOAD WEAKER SYSTEMS(over 1M)
 urls_standard:
 #  -  https://raw.githubusercontent.com/dewdmadbro/ip-blocklist-dewd/refs/heads/main/data/output/aggregated.txt
   -  https://raw.githubusercontent.com/O-X-L/risk-db-lists/refs/heads/main/ip/top_100000.txt
@@ -28,18 +28,4 @@ urls_standard:
   -  https://raw.githubusercontent.com/elliotwutingfeng/ThreatFox-IOC-IPs/refs/heads/main/ips.txt
   -  https://raw.githubusercontent.com/Naunter/BT_BlockLists/refs/heads/master/list_1.txt
   -  https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/abuseipdb-s100-30d.ipv4
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/exim-bf.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-bad-user-agent.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-bypass-cache.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-invalid-http-versions.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-random-uri.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-dos-swithcing-ua.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/http-generic-bf.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/iptables-scan-multi_ports.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/mysql-bf.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/nginx-req-limit-exceeded.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/openappsec-request-rate-limit.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/smb-bf.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/ssh-bf.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/tcpudp-flood-traefik.json.txt
-  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/main/telnet-bf.json.txt
+  -  https://raw.githubusercontent.com/Y3ll0w/CrowdSec-CAPI-Decisions/refs/heads/main/all.txt
